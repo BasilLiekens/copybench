@@ -1,0 +1,17 @@
+[project]
+name = "copybench"
+version = "0.1.0"
+description = "Benchmark code used in scipy issue #24340"
+readme = "readme.md"
+license = {file = "license.md"}
+authors = [
+    {name = "Basil Liekens", email = "100433776+BasilLiekens@users.noreply.github.com"}
+]
+dependencies = [
+    "numpy>=2.4.3,<3",
+    "matplotlib>=3.10.8,<4",
+]
+
+[build-system]
+build-backend = "mesonpy"
+requires = ["meson-python", "numpy"]
