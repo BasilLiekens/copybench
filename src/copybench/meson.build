@@ -10,7 +10,7 @@ py3.install_sources(
 
 py3.extension_module(
     'cppcopy',
-    'src/_cpp_copying.cpp',
+    'src/_cpp_copying_module.cpp',
     install: true,
     dependencies: np_dep,
     subdir: 'copybench'

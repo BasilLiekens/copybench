@@ -21,33 +21,40 @@ def runtest(
 
 
 def main():
-    funcs = [copybench.single_copy, copybench.double_copy]
+    colors = {
+        copybench.single_copy: "tab:blue",
+        copybench.double_copy: "tab:orange",
+        copybench.blocked_copy: "tab:green",
+    }
+    labels = {
+        copybench.single_copy: "single copy (naive)",
+        copybench.double_copy: "double copy",
+        copybench.blocked_copy: "single copy (blocked)",
+    }
+    markers = {"C": "o", "F": "x"}
+
+    funcs = [copybench.single_copy, copybench.double_copy, copybench.blocked_copy]
     orderings = ["C", "F"]
 
     sizes = [10, 12, 14, 16, 20, 26, 32, 64, 128, 256, 512, 1024, 2048, 4096]
     nRuns = 10
 
-    res = dict()
+    fig, ax = plt.subplots()
+    fig.set_size_inches(8.5, 5.5)
 
     for order in orderings:
         for func in funcs:
             times = [
                 runtest(size, size, np.float64, order, func, nRuns) for size in sizes
             ]
-            res[func.__name__ + f", {order}-ordering"] = times
-
-    fig, ax = plt.subplots()
-    fig.set_size_inches(8.5, 5.5)
-
-    for func, times in res.items():
-        color = "tab:blue" if "C-ordering" in func else "tab:orange"
-        marker = "o" if "single" in func else "x"
-        label = (
-            ("double copy" if "double" in func else "single copy")
-            + ", "
-            + func.split(", ")[-1]
-        )
-        ax.loglog(sizes, times, c=color, marker=marker, lw=2, label=label)
+            ax.loglog(
+                sizes,
+                times,
+                c=colors[func],
+                marker=markers[order],
+                lw=2,
+                label=f"{labels[func]}, {order}-ordered",
+            )
 
     ax.set(
         xlabel="matrix dimension",

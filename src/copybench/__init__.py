@@ -1,3 +1,3 @@
-from .cppcopy import double_copy, single_copy
+from .cppcopy import blocked_copy, double_copy, single_copy
 
-__all__ = ["single_copy", "double_copy"]
+__all__ = ["blocked_copy", "double_copy", "single_copy"]
